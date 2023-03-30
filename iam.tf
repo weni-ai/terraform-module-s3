@@ -1,6 +1,6 @@
 resource "aws_iam_user" "bucket-user" {
   count = var.enable && var.username!="" ? 1 : 0
-  name = "${local.s3-bucket.username}"
+  name = "${var.username}"
   #path = "/system/"
 }
 
@@ -21,7 +21,7 @@ resource "aws_iam_user_policy" "bucket-user-policy" {
       "Sid": "VisualEditor0",
       "Effect": "Allow",
       "Action": "s3:ListBucket",
-      "Resource": "arn:aws:s3:::${local.s3-bucket.bucket_name}"
+      "Resource": "arn:aws:s3:::${var.bucketname}"
     },
     {
       "Sid": "VisualEditor2",
@@ -36,7 +36,7 @@ resource "aws_iam_user_policy" "bucket-user-policy" {
         "s3:GetObjectAcl"
       ],
       "Resource": [
-        "arn:aws:s3:::${local.s3-bucket.bucket_name}/*"
+        "arn:aws:s3:::${var.bucketname}/*"
       ]
     }
   ]

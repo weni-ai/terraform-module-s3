@@ -1,46 +1,28 @@
 resource "aws_s3_bucket" "bucket" {
   count = var.enable ? 1 : 0
-  bucket = var.bucketname
+  bucket = join("-", ["weni", var.environment, var.bucketname ])
+  tags = local.common_tags
+  # cors_rule = var.cors_rule
+}
 
-  lifecycle_rule {
-    id      = "delete-after-days"
+resource "aws_s3_bucket_intelligent_tiering_configuration" "tiering_bucket" {
+  bucket = aws_s3_bucket.bucket[0].id
+  name   = "Intelligent-Tiering"
 
-    expiration {
-      days  = var.delete-days
-    }
-
-    enabled = var.delete-enable
+  tiering {
+    access_tier = "DEEP_ARCHIVE_ACCESS"
+    days        = 180
   }
-  lifecycle_rule {
-    id      = "glacier-after-days"
-
-    transition {
-      days          = var.glacier-days
-      storage_class = "GLACIER"
-    }
-
-    enabled = var.glacier-enable
-  }
-  lifecycle_rule {
-    id      = "ia-after-days"
-
-    transition {
-      days          = var.ia-days
-      storage_class = "STANDARD_IA"
-    }
-
-    enabled = var.ia-enable
-  }
-
-  tags = var.tags
-  cors_rule = var.cors_rule
-
-  grant {
-    type        = "Group"
-    permissions = ["READ_ACP"]
-    uri         = "http://acs.amazonaws.com/groups/global/AllUsers"
+  tiering {
+    access_tier = "ARCHIVE_ACCESS"
+    days        = 90
   }
 }
+
+# resource "aws_s3_bucket_acl" "example_bucket_acl" {
+#   bucket = aws_s3_bucket.bucket[0].id
+#   acl    = var.type
+# }
 
 // vim: nu ts=2 fdm=indent noet ft=terraform:
 

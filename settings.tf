@@ -1,6 +1,6 @@
 terraform {
   required_providers {
-    contabo={
+    aws={
       source="hashicorp/aws"
       version=">= 4.60.0"
     }
