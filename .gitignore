@@ -569,6 +569,11 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+#Terraform credencial 
+secrets.tf
+credentials.tf
+.terraform.lock.hcl
+
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
 
