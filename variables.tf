@@ -1,3 +1,9 @@
+#Variables of ative or no the module
+variable "enable" {
+  type    = bool
+  default = true
+}
+
 #Varibles of S3
 variable "bucketname" {
   description = "Atribui nome ao bucket"
@@ -10,8 +16,8 @@ variable "type" {
   type    = string
   default = "private"
   validation {
-    condition     = contains(["private", "public-read", "public-read-write", "aws-exec-read", "authenticated-read", "log-delivery-write"], var.type)
-    error_message = "ACL inválida, valores permitidos: private, public-read, public-read-write, aws-exec-read, authenticated-read, log-delivery-write."
+    condition     = contains(["private", "public-read"], var.type)
+    error_message = "ACL inválida, valores permitidos: private, public-read."
   }
 }
 
@@ -20,8 +26,8 @@ variable "environment" {
   type = string
   default = "develop"
   validation {
-    condition     = contains(["production", "develop"], var.environment)
-    error_message = "Environment inválida, valores permitidos: production, develop."
+    condition     = contains(["production", "develop", "staging"], var.environment)
+    error_message = "Environment inválida, valores permitidos: production, develop, staging."
   }
 }
 
@@ -69,9 +75,25 @@ variable "ia-enable" {
 }
 
 # Variable of IAM
-variable "enable" {
-  type    = bool
-  default = true
+variable "username" {
+  type    = string
+  default = ""
+}
+
+# Variable of module EKS
+variable "eks_cluster_name" {
+  type    = string
+  default = "eks-production"
+}
+
+variable "eks_sa_name" {
+  type    = string
+  default = ""
+}
+
+variable "eks_sa_namespace" {
+  type    = string
+  default = ""
 }
 
 variable "rolename" {
@@ -79,11 +101,7 @@ variable "rolename" {
   default = ""
 }
 
-variable "username" {
-  type    = string
-  default = ""
-}
-
+# VAriables of Roles 
 # variable "cors_rule" {
 #   type    = map(string)
 #   default = {
