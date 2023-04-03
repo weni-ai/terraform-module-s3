@@ -2,7 +2,12 @@ resource "aws_s3_bucket" "bucket" {
   count = var.enable ? 1 : 0
   bucket = join("-", ["weni", var.environment, var.bucketname ])
   tags = local.common_tags
-  # cors_rule = var.cors_rule
+	#cors_rule = var.cors_rule
+  lifecycle {
+    ignore_changes = [
+      tags.Created
+    ]
+  }
 }
 
 resource "aws_s3_bucket_intelligent_tiering_configuration" "tiering_bucket" {

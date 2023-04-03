@@ -1,43 +1,18 @@
-# module "eks-role" {
-#   count = var.enable && var.rolename!="" ? 1 : 0
-#   source  = "reegnz/oidc-provider-data/aws//examples/eks-oidc-role"
-#   version = "0.0.4"
-#   eks_cluster_name = var.eks_cluster_name
-#   eks_sa_name	= var.eks_sa_name
-#   eks_sa_namespace = var.eks_sa_namespace
-#   role_name = var.rolename	
-# }
+module "eks-role" {
+  count = var.enable ? length(var.eks) : 0
+  source  = "reegnz/oidc-provider-data/aws//examples/eks-oidc-role"
+  version = "0.0.4"
+  eks_cluster_name = var.eks[count.index].cluster
+  eks_sa_name      = var.eks[count.index].sa
+  eks_sa_namespace = var.eks[count.index].namespace
+  role_name        = "${var.bucketname}-${var.eks[count.index].cluster}-${var.eks[count.index].namespace}-${var.eks[count.index].sa}-eks-rw"
+}
 
-# resource "aws_iam_role_policy" "s3_policy" {
-#   count = var.enable && var.rolename!="" ? 1 : 0   
-#   name = var.rolename
-#   role = module.eks-role[0].role_name
+resource "aws_iam_role_policy_attachment" "eks" {
+  count = var.enable ? length(var.eks) : 0
+  role = module.eks-role[count.index].role_name
+  policy_arn = aws_iam_policy.bucket-rw[count.index].arn
+}
 
-#   policy = jsonencode({
-#     Version = "2012-10-17"
-#     Statement = [
-#       {
-#       "Sid": "VisualEditor0",
-#       "Effect": "Allow",
-#       "Action": "s3:ListBucket",
-#       "Resource": "arn:aws:s3:::${var.bucketname}"
-#     },
-#     {
-#       "Sid": "VisualEditor2",
-#       "Effect": "Allow",
-#       "Action": [
-#         "s3:PutObject",
-#         "s3:GetObject",
-#         "s3:DeleteObject",
-#         "s3:ListBucket",
-#         "s3:ListObjects",
-#         "s3:PutObjectAcl",
-#         "s3:GetObjectAcl"
-#       ],
-#       "Resource": [
-#         "arn:aws:s3:::${var.bucketname}/*"
-#       ]
-#     },
-#     ]
-#   })
-# }
+// vim: nu ts=2 fdm=indent noet ft=terraform:
+

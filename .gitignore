@@ -579,3 +579,5 @@ credentials.tf
 
 # End of https://www.toptal.com/developers/gitignore/api/terraform,vim,visualstudio,visualstudiocode,sublimetext,emacs,git,dotenv
 
+*env.sh
+

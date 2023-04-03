@@ -1,5 +1,6 @@
 resource "aws_s3_bucket_lifecycle_configuration" "lifecycle_config" {
   bucket = aws_s3_bucket.bucket[0].id
+  count = var.enable ? 1 : 0
 
   rule {
     id = "move to Glacier Instant Retrieval after x days"
@@ -35,3 +36,6 @@ resource "aws_s3_bucket_lifecycle_configuration" "lifecycle_config" {
 }
 
 ## Para entender as classes de armazenamento, consulte a seguinte documentação: https://aws.amazon.com/pt/s3/storage-classes/
+
+// vim: nu ts=2 fdm=indent noet ft=terraform:
+

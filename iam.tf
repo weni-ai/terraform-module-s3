@@ -1,6 +1,7 @@
 resource "aws_iam_user" "bucket-user" {
   count = var.enable && var.username!="" ? 1 : 0
-  name = "${var.username}"
+  name  = "${var.username}"
+  tags  = local.common_tags
   #path = "/system/"
 }
 
@@ -9,39 +10,10 @@ resource "aws_iam_access_key" "bucket-access-key" {
   user = aws_iam_user.bucket-user[0].name
 }
 
-resource "aws_iam_user_policy" "bucket-user-policy" {
+resource "aws_iam_user_policy_attachment" "user-rw" {
   count = var.enable && var.username!="" ? 1 : 0
   user = aws_iam_user.bucket-user[0].name
-  name = var.username
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Sid": "VisualEditor0",
-      "Effect": "Allow",
-      "Action": "s3:ListBucket",
-      "Resource": "arn:aws:s3:::${var.bucketname}"
-    },
-    {
-      "Sid": "VisualEditor2",
-      "Effect": "Allow",
-      "Action": [
-        "s3:PutObject",
-        "s3:GetObject",
-        "s3:DeleteObject",
-        "s3:ListBucket",
-        "s3:ListObjects",
-        "s3:PutObjectAcl",
-        "s3:GetObjectAcl"
-      ],
-      "Resource": [
-        "arn:aws:s3:::${var.bucketname}/*"
-      ]
-    }
-  ]
-}
-EOF
+  policy_arn = aws_iam_policy.bucket-rw[0].arn
 }
 
 // vim: nu ts=2 fdm=indent noet ft=terraform:

@@ -81,37 +81,37 @@ variable "username" {
 }
 
 # Variable of module EKS
-variable "eks_cluster_name" {
-  type    = string
-  default = "eks-production"
+variable "eks" {
+  description = "Cria roles de escrita e leitura para serem usadas no EKS"
+  type    = list(object({
+    cluster = string
+    sa = string
+    namespace = string
+  }))
+  default = []
 }
 
-variable "eks_sa_name" {
-  type    = string
-  default = ""
+variable "tags" {
+  description = "Define a squad detentora do bucket"
+  type = map
+  default = {
+    Service = "S3"
+    Managed_By = "Terraform"
+  }
 }
 
-variable "eks_sa_namespace" {
-  type    = string
-  default = ""
+# Variables of CORS
+variable "cors_rule" {
+  default = [
+    {
+      allowed_headers = ["*"]
+      allowed_methods = ["PUT", "HEAD", "POST", "GET"]
+      allowed_origins = ["*.weni.ai"]
+      expose_headers  = ["ETag","Access-Control-Allow-Origin"]
+      max_age_seconds = 3000
+    }
+  ]
 }
-
-variable "rolename" {
-  type    = string
-  default = ""
-}
-
-# VAriables of Roles 
-# variable "cors_rule" {
-#   type    = map(string)
-#   default = {
-#     allowed_headers = ["*"]
-#     allowed_methods = ["PUT", "HEAD", "POST", "GET"]
-#     allowed_origins = ["*.weni.ai"]
-#     expose_headers  = ["ETag","Access-Control-Allow-Origin"]
-#     max_age_seconds = 3000
-#   }
-# }
 
 // vim: nu ts=2 fdm=indent noet ft=terraform:
 

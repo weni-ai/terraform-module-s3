@@ -1,16 +1,23 @@
-module "bulcket-private" {
-  source = "../"
-  bucketname = "bucket-private"
+module "bucket-private" {
+  source      = "../"
+  bucketname  = "bucket-private"
   environment = "production"
-  squad = "cloud"
-  rolename = "weni-s3-bucket"
+  squad       = "cloud"
+  rolename    = "weni-s3-bucket"
 }
 
-module "bulcket-public" {
-  source = "../"
+module "bucket-public" {
+  source     = "../"
   bucketname = "bucket-public"
-  type = "public-read"
-  squad = "cloud"
-  rolename = "weni-s3-bucket"
+  type       = "public-read"
+  squad      = "cloud"
+  rolename   = "weni-s3-bucket"
+  eks = [
+    {
+      cluster   = "dev-apps"
+      namespace = "chats"
+      sa        = "chats"
+    }
+  ]
 }
 
