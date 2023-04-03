@@ -9,7 +9,6 @@ resource "aws_s3_bucket" "bucket" {
   count = var.enable ? 1 : 0
   bucket = join("-", ["weni", var.environment, var.bucketname ])
   tags = local.common_tags
-	#cors_rule = var.cors_rule
   lifecycle {
     ignore_changes = [
       tags.Created
@@ -18,6 +17,7 @@ resource "aws_s3_bucket" "bucket" {
 }
 
 resource "aws_s3_bucket_intelligent_tiering_configuration" "tiering_bucket" {
+  count = var.enable ? 1 : 0
   bucket = aws_s3_bucket.bucket[0].id
   name   = "Intelligent-Tiering"
 
@@ -30,11 +30,6 @@ resource "aws_s3_bucket_intelligent_tiering_configuration" "tiering_bucket" {
     days        = 90
   }
 }
-
-# resource "aws_s3_bucket_acl" "example_bucket_acl" {
-#   bucket = aws_s3_bucket.bucket[0].id
-#   acl    = var.type
-# }
 
 // vim: nu ts=2 fdm=indent noet ft=terraform:
 
