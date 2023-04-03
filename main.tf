@@ -1,3 +1,10 @@
+/**
+ * # terraform-module-s3
+ *
+ * This module creates an S3 bucket with support for versioning, lifecycles, ACL, bucket object policies.
+ *
+ */
+
 resource "aws_s3_bucket" "bucket" {
   count = var.enable ? 1 : 0
   bucket = join("-", ["weni", var.environment, var.bucketname ])

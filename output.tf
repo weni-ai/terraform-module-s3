@@ -2,9 +2,10 @@ output "bucket" {
   description ="Bucket created"
   # sensitive = false
   value = {
-    access_key = var.enable && var.username!="" ? aws_iam_access_key.bucket-access-key[0].id : "",
-    secret_key = var.enable && var.username!="" ? nonsensitive(aws_iam_access_key.bucket-access-key[0].secret) : "",
-    eks_roles = module.eks-role[*].role_name,
+    access_key = try(aws_iam_access_key.bucket-access-key[0].id, null),
+    secret_key = try(nonsensitive(aws_iam_access_key.bucket-access-key[0].secret), null),
+    eks_roles = try(module.eks-role[*].role_name, null),
+    name = try(var.bucketname, null)
   }
 }
 

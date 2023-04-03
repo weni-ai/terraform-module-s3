@@ -3,7 +3,6 @@ module "bucket-private" {
   bucketname  = "bucket-private"
   environment = "production"
   squad       = "cloud"
-  rolename    = "weni-s3-bucket"
 }
 
 module "bucket-public" {
@@ -11,7 +10,6 @@ module "bucket-public" {
   bucketname = "bucket-public"
   type       = "public-read"
   squad      = "cloud"
-  rolename   = "weni-s3-bucket"
   eks = [
     {
       cluster   = "dev-apps"
