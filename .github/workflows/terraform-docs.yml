@@ -1,7 +1,9 @@
 ---
 name: Generate terraform docs
 on:
-  workflow_dispatch:
+  push:
+    branches:
+    - main
 jobs:
   docs:
     runs-on: ubuntu-latest
@@ -14,4 +16,4 @@ jobs:
         working-dir: .
         output-file: README.md
         output-method: inject
-        git-push: "false"
+        git-push: "true"
