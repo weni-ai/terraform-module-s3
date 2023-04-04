@@ -1,0 +1,18 @@
+---
+name: terraform-docs
+
+on:
+   workflow_dispatch:
+#   push:
+#     branches:
+#     - main
+    
+jobs:
+  terraform-docs:
+    name: Run terraform-docs
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: terraform-docs-gh-actions
+      uses: terraform-docs/gh-actions@v1.0.0
+      
