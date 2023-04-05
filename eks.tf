@@ -11,7 +11,7 @@ module "eks-role" {
 resource "aws_iam_role_policy_attachment" "eks" {
   count = var.enable ? length(var.eks) : 0
   role = module.eks-role[count.index].role_name
-  policy_arn = aws_iam_policy.bucket-rw[count.index].arn
+  policy_arn = aws_iam_policy.bucket-rw[0].arn
 }
 
 // vim: nu ts=2 fdm=indent noet ft=terraform:
