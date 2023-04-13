@@ -4,7 +4,7 @@ data "aws_iam_policy_document" "bucket-rw" {
     sid = "listBucket"
     actions = ["s3:ListBucket"]
     resources = [
-      "${aws_s3_bucket.bucket.arn}"
+      "${aws_s3_bucket.bucket[0].arn}"
     ]
   }
   statement {
@@ -18,7 +18,7 @@ data "aws_iam_policy_document" "bucket-rw" {
       "s3:PutObjectAcl",
     ]
     resources = [
-      "${aws_s3_bucket.bucket.arn}"
+      "${aws_s3_bucket.bucket[0].arn}"
     ]
   }
 }
