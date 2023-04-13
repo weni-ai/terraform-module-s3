@@ -4,7 +4,7 @@ data "aws_iam_policy_document" "bucket-rw" {
     sid = "listBucket"
     actions = ["s3:ListBucket"]
     resources = [
-      "arn:aws:s3:::${var.bucketname}"
+      "${aws_s3_bucket.bucket.arn}"
     ]
   }
   statement {
@@ -18,13 +18,13 @@ data "aws_iam_policy_document" "bucket-rw" {
       "s3:PutObjectAcl",
     ]
     resources = [
-      "arn:aws:s3:::${var.bucketname}/*"
+      "${aws_s3_bucket.bucket.arn}"
     ]
   }
 }
 
 resource "aws_iam_policy" "bucket-rw" {
-  name   = "${var.bucketname}-rw"
+  name   = "${aws_s3_bucket.bucket.arn}-rw"
   count  = var.enable ? 1 : 0
   policy = data.aws_iam_policy_document.bucket-rw[0].json
   #path   = "/"
