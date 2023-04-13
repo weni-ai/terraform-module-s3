@@ -24,7 +24,7 @@ data "aws_iam_policy_document" "bucket-rw" {
 }
 
 resource "aws_iam_policy" "bucket-rw" {
-  name   = "${aws_s3_bucket.bucket[0].name}-rw"
+  name   = "${aws_s3_bucket.bucket[0].bucket}-rw"
   count  = var.enable ? 1 : 0
   policy = data.aws_iam_policy_document.bucket-rw[0].json
   #path   = "/"
