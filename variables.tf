@@ -26,8 +26,8 @@ variable "environment" {
   type = string
   default = "develop"
   validation {
-    condition     = contains(["production", "develop", "staging"], var.environment)
-    error_message = "Environment inválida, valores permitidos: production, develop, staging."
+    condition     = contains(["production", "prod", "develop", "staging"], var.environment)
+    error_message = "Environment inválida, valores permitidos: production, prod, develop, staging."
   }
 }
 
