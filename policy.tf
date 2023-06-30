@@ -2,7 +2,12 @@ data "aws_iam_policy_document" "bucket-rw" {
   count = var.enable ? 1 : 0
   statement {
     sid = "listBucket"
-    actions = ["s3:ListBucket"]
+    actions = [
+      "s3:ListBucket",
+      "s3:AbortMultipartUpload",
+      "s3:ListMultipartUploadParts",
+      "s3:ListBucketMultipartUploads"
+    ]
     resources = [
       "${aws_s3_bucket.bucket[0].arn}"
     ]
