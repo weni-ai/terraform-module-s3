@@ -8,7 +8,6 @@ variable "enable" {
 variable "bucketname" {
   description = "Atribui nome ao bucket"
   type    = string
-  default = ""
 }
 
 variable "type" {
@@ -24,7 +23,6 @@ variable "type" {
 variable "environment" {
   description = "Define o Ambiente de implantação"
   type = string
-  default = "develop"
   validation {
     condition     = contains(["production", "prod", "develop", "staging", "nonprod"], var.environment)
     error_message = "Environment inválida, valores permitidos: production, prod, develop, staging, nonprod."
@@ -34,7 +32,6 @@ variable "environment" {
 variable "squad" {
   description = "Define a squad detentora do bucket"
   type = string
-  default = ""
 }
 
 # Variables of Lifecycle
@@ -72,6 +69,20 @@ variable "ia-enable" {
   description = "Habilita ou desabilita o lifecycle ia-enable"
   type    = string
   default = "Disabled"
+}
+
+# Variables of intelligent tiering
+
+variable "deep_archive_access" {
+  description = "Define a quantidade de dias para mover os arquivos para deep_archive_access"
+  type = number
+  default = 180
+}
+
+variable "archive_access" {
+  description = "Define a quantidade de dias para mover os arquivos para archive_access "
+  type = number
+  default = 90
 }
 
 # Variable of IAM
