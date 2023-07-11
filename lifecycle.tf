@@ -1,12 +1,12 @@
 resource "aws_s3_bucket_lifecycle_configuration" "lifecycle_config" {
   bucket = aws_s3_bucket.bucket[0].id
-  count = var.enable ? 1 : 0
+  count  = var.enable ? 1 : 0
 
   rule {
     id = "move to Glacier Instant Retrieval after x days"
 
     transition {
-      days = var.glacier-days
+      days          = var.glacier-days
       storage_class = "GLACIER_IR"
     }
 
@@ -17,7 +17,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "lifecycle_config" {
     id = "move to Standard-Infrequent Access after x days"
 
     transition {
-      days = var.ia-days
+      days          = var.ia-days
       storage_class = "STANDARD_IA"
     }
 

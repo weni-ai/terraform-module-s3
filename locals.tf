@@ -2,12 +2,12 @@ locals {
   current_timestamp = timestamp()
   common_tags = merge(
     tomap({
-      Name = var.bucketname
+      Name        = var.bucketname
       Environment = var.environment
-      Squad = var.squad
-      Service = "S3"
-      Managed_By = "Terraform"
-      Created = formatdate("YYYY-MM-DD", local.current_timestamp)
+      Squad       = var.squad
+      Service     = "S3"
+      Managed_By  = "Terraform"
+      Created     = formatdate("YYYY-MM-DD", local.current_timestamp)
     }),
     var.tags
   )
