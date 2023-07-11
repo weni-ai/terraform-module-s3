@@ -105,18 +105,20 @@ This module creates an S3 bucket with support for versioning, lifecycles, ACL, b
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_bucketname"></a> [bucketname](#input\_bucketname) | Atribui nome ao bucket | `string` | `""` | no |
+| <a name="input_archive_access"></a> [archive\_access](#input\_archive\_access) | Define a quantidade de dias para mover os arquivos para archive\_access | `number` | `90` | no |
+| <a name="input_bucketname"></a> [bucketname](#input\_bucketname) | Atribui nome ao bucket | `string` | n/a | yes |
 | <a name="input_cors_rule"></a> [cors\_rule](#input\_cors\_rule) | Variables of CORS | `list` | <pre>[<br>  {<br>    "allowed_headers": [<br>      "*"<br>    ],<br>    "allowed_methods": [<br>      "PUT",<br>      "HEAD",<br>      "POST",<br>      "GET"<br>    ],<br>    "allowed_origins": [<br>      "*.weni.ai"<br>    ],<br>    "expose_headers": [<br>      "ETag",<br>      "Access-Control-Allow-Origin"<br>    ],<br>    "max_age_seconds": 3000<br>  }<br>]</pre> | no |
+| <a name="input_deep_archive_access"></a> [deep\_archive\_access](#input\_deep\_archive\_access) | Define a quantidade de dias para mover os arquivos para deep\_archive\_access | `number` | `180` | no |
 | <a name="input_delete-days"></a> [delete-days](#input\_delete-days) | Define a quantidade de dias para deletar os arquivos | `string` | `"30"` | no |
 | <a name="input_delete-enable"></a> [delete-enable](#input\_delete-enable) | Habilita ou desabilita o lifecycle delete-enable | `string` | `"Disabled"` | no |
 | <a name="input_eks"></a> [eks](#input\_eks) | Cria roles de escrita e leitura para serem usadas no EKS | <pre>list(object({<br>    cluster = string<br>    sa = string<br>    namespace = string<br>  }))</pre> | `[]` | no |
 | <a name="input_enable"></a> [enable](#input\_enable) | Variables of ative or no the module | `bool` | `true` | no |
-| <a name="input_environment"></a> [environment](#input\_environment) | Define o Ambiente de implantação | `string` | `"develop"` | no |
+| <a name="input_environment"></a> [environment](#input\_environment) | Define o Ambiente de implantação | `string` | n/a | yes |
 | <a name="input_glacier-days"></a> [glacier-days](#input\_glacier-days) | Define a quantidade de dias para mover os arquivos | `string` | `"7"` | no |
 | <a name="input_glacier-enable"></a> [glacier-enable](#input\_glacier-enable) | Habilita ou desabilita o lifecycle glacier-enable | `string` | `"Disabled"` | no |
 | <a name="input_ia-days"></a> [ia-days](#input\_ia-days) | Define a quantidade de dias para mover os arquivos | `string` | `"30"` | no |
 | <a name="input_ia-enable"></a> [ia-enable](#input\_ia-enable) | Habilita ou desabilita o lifecycle ia-enable | `string` | `"Disabled"` | no |
-| <a name="input_squad"></a> [squad](#input\_squad) | Define a squad detentora do bucket | `string` | `""` | no |
+| <a name="input_squad"></a> [squad](#input\_squad) | Define a squad detentora do bucket | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Define a squad detentora do bucket | `map` | <pre>{<br>  "Managed_By": "Terraform",<br>  "Service": "S3"<br>}</pre> | no |
 | <a name="input_type"></a> [type](#input\_type) | Define o tipo de ACL | `string` | `"private"` | no |
 | <a name="input_username"></a> [username](#input\_username) | Variable of IAM | `string` | `""` | no |
