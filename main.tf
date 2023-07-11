@@ -23,11 +23,11 @@ resource "aws_s3_bucket_intelligent_tiering_configuration" "tiering_bucket" {
 
   tiering {
     access_tier = "DEEP_ARCHIVE_ACCESS"
-    days        = 180
+    days        = var.deep_archive_access
   }
   tiering {
     access_tier = "ARCHIVE_ACCESS"
-    days        = 90
+    days        = var.archive_access
   }
 }
 
