@@ -1,7 +1,7 @@
 /**
  * # terraform-module-s3
  *
- * This module creates an S3 bucket with support for versioning, lifecycles, ACL, bucket object policies.
+ * Este módulo cria um S3 bucket com suporte para versioning, lifecycles, ACL, bucket object policies.
  *
  * Se a variável enable for definida como true, o módulo provisionará um usuário e secretes do IAM com permissões para acessar o bucket. Os usuários ou sistemas que têm credenciais do IAM devem receber acesso diretamente com base em sua identidade do IAM por meio de private_principal_arns ou ser autorizados a assumir uma função do IAM com acesso.
  * Não recomendamos criar usuários do IAM dessa forma para qualquer outra finalidade. 
