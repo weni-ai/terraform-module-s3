@@ -1,5 +1,5 @@
 resource "aws_s3_bucket_cors_configuration" "cors" {
-  count  = var.enable ? 1 : 0
+  count  = var.enable ? length(var.cors_rule) : 0
   bucket = aws_s3_bucket.bucket[0].id
 
   dynamic "cors_rule" {
