@@ -4,8 +4,6 @@ data "aws_iam_policy_document" "bucket-rw" {
     sid = "listBucket"
     actions = [
       "s3:ListBucket",
-      "s3:AbortMultipartUpload",
-      "s3:ListMultipartUploadParts",
       "s3:ListBucketMultipartUploads"
     ]
     resources = [
@@ -21,6 +19,8 @@ data "aws_iam_policy_document" "bucket-rw" {
       "s3:ListBucket",
       "s3:ListObjects",
       "s3:PutObjectAcl",
+      "s3:AbortMultipartUpload",
+      "s3:ListMultipartUploadParts",
     ]
     resources = [
       "${aws_s3_bucket.bucket[0].arn}/*"
