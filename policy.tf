@@ -23,7 +23,7 @@ data "aws_iam_policy_document" "bucket-rw" {
       "s3:PutObjectAcl",
     ]
     resources = [
-      "${aws_s3_bucket.bucket[0].arn}"
+      "${aws_s3_bucket.bucket[0].arn}/*"
     ]
   }
 }
@@ -35,6 +35,3 @@ resource "aws_iam_policy" "bucket-rw" {
   #path   = "/"
   tags = local.common_tags
 }
-
-// vim: nu ts=2 fdm=indent noet ft=terraform:
-
