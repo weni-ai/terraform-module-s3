@@ -85,8 +85,8 @@ module "bucket" {
 | <a name="input_glacier-enable"></a> [glacier-enable](#input\_glacier-enable) | Habilita ou desabilita o lifecycle glacier-enable | `string` | `"Disabled"` | no |
 | <a name="input_ia-days"></a> [ia-days](#input\_ia-days) | Define a quantidade de dias para mover os arquivos | `string` | `"30"` | no |
 | <a name="input_ia-enable"></a> [ia-enable](#input\_ia-enable) | Habilita ou desabilita o lifecycle ia-enable | `string` | `"Disabled"` | no |
-| <a name="input_squad"></a> [squad](#input\_squad) | Define a squad detentora do bucket | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Define a squad detentora do bucket | `map(any)` | <pre>{<br>  "Managed_By": "Terraform",<br>  "Service": "S3"<br>}</pre> | no |
+| <a name="input_team"></a> [team](#input\_team) | Define a squad detentora do bucket | `string` | n/a | yes |
 | <a name="input_type"></a> [type](#input\_type) | Define o tipo de ACL | `string` | `"private"` | no |
 | <a name="input_username"></a> [username](#input\_username) | value | `string` | `""` | no |
 
