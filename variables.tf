@@ -33,7 +33,7 @@ variable "environment" {
   }
 }
 
-variable "squad" {
+variable "team" {
   description = "Define a squad detentora do bucket"
   type        = string
 }
