@@ -1,13 +1,9 @@
-output "bucket" {
-  description = "Bucket created"
-  # sensitive = false
+output "s3_access_info" {
+  description = "IAM role name, S3 bucket name, and user access keys with permissions"
   value = {
-    access_key = try(aws_iam_access_key.bucket-access-key[0].id, null),
-    secret_key = try(nonsensitive(aws_iam_access_key.bucket-access-key[0].secret), null),
-    eks_roles  = try(module.eks-role[*].role_name, null),
-    name       = try(var.bucketname, null)
+    access_key = try(aws_iam_access_key.bucket_access_key[0].id, null),
+    secret_key = try(nonsensitive(aws_iam_access_key.bucket_access_key[0].secret), null),
+    eks_roles  = try(module.iam_eks_role[*].iam_role_name, null),
+    name       = try(var.bucket_name, null)
   }
 }
-
-// vim: nu ts=2 fdm=indent noet ft=terraform:
-
