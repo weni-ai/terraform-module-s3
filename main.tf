@@ -1,5 +1,12 @@
 resource "aws_s3_bucket" "bucket" {
   bucket = var.bucket_name
+
+  tags = local.common_tags
+  lifecycle {
+    ignore_changes = [
+      tags.Created
+    ]
+  }
 }
 
 resource "aws_s3_bucket_acl" "bucket_acl" {

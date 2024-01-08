@@ -91,3 +91,8 @@ variable "cors_rules" {
     }
   ]
 }
+
+variable "tags" {
+  type    = map(string)
+  default = {}
+}
