@@ -1,9 +1,7 @@
 locals {
-  current_timestamp = timestamp()
-
   default_tags = {
-    Managed_By = "Terraform"
-    Created    = formatdate("YYYY-MM-DD", local.current_timestamp)
+    Managed_By      = "Terraform"
+    CreateTimestamp = timestamp()
   }
 
   common_tags = merge(

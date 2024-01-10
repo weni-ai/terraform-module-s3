@@ -4,7 +4,7 @@ resource "aws_s3_bucket" "bucket" {
   tags = local.common_tags
   lifecycle {
     ignore_changes = [
-      tags.Created
+      tags["CreateTimestamp"]
     ]
   }
 }
