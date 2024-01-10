@@ -1,4 +1,6 @@
 resource "aws_s3_bucket" "bucket" {
+  count = var.create ? 1 : 0
+
   bucket = var.bucket_name
 
   tags = local.common_tags
@@ -10,14 +12,17 @@ resource "aws_s3_bucket" "bucket" {
 }
 
 resource "aws_s3_bucket_acl" "bucket_acl" {
-  bucket = aws_s3_bucket.bucket.id
+  count = var.create ? 1 : 0
+
+  bucket = aws_s3_bucket.bucket[0].id
   acl    = var.bucket_acl
 }
 
 resource "aws_s3_bucket_intelligent_tiering_configuration" "bucket_tiering" {
-  bucket = aws_s3_bucket.bucket.id
+  count = var.create ? 1 : 0
 
-  name = "EntireBucket"
+  bucket = aws_s3_bucket.bucket[0].id
+  name   = "EntireBucket"
 
   tiering {
     access_tier = "DEEP_ARCHIVE_ACCESS"
@@ -33,15 +38,15 @@ resource "aws_s3_bucket_intelligent_tiering_configuration" "bucket_tiering" {
 }
 
 resource "aws_s3_bucket_policy" "bucket_policy" {
-  count = var.bucket_acl == "public-read" ? 1 : 0
+  count = var.create && var.bucket_acl == "public-read" ? 1 : 0
 
-  bucket = aws_s3_bucket.bucket.id
-  policy = data.aws_iam_policy_document.allow_public_access.json
+  bucket = aws_s3_bucket.bucket[0].id
+  policy = data.aws_iam_policy_document.allow_public_access[0].json
 }
 
 resource "aws_s3_bucket_cors_configuration" "cors" {
-  count  = length(var.cors_rules)
-  bucket = aws_s3_bucket.bucket.id
+  count  = var.create && length(var.cors_rules) > 0 ? 1 : 0
+  bucket = aws_s3_bucket.bucket[0].id
 
   dynamic "cors_rule" {
     for_each = var.cors_rules

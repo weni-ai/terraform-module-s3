@@ -1,5 +1,7 @@
 resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
-  bucket = aws_s3_bucket.bucket.id
+  count = var.create ? 1 : 0
+
+  bucket = aws_s3_bucket.bucket[0].id
 
   rule {
     id = "Transition to Glacier Instant Retrieval"

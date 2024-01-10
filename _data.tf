@@ -1,4 +1,6 @@
 data "aws_iam_policy_document" "allow_public_access" {
+  count = var.create && (var.create_iam_user || length(var.create_iam_eks_role) > 0) ? 1 : 0
+
   statement {
     sid = "AllowGetPublic"
     actions = [
@@ -7,12 +9,14 @@ data "aws_iam_policy_document" "allow_public_access" {
     ]
 
     resources = [
-      "${aws_s3_bucket.bucket.arn}/*",
+      "${aws_s3_bucket.bucket[0].arn}/*",
     ]
   }
 }
 
 data "aws_iam_policy_document" "allow_read_write" {
+  count = var.create && (var.create_iam_user || length(var.create_iam_eks_role) > 0) ? 1 : 0
+
   statement {
     sid = "AllowListBucket"
     actions = [
@@ -20,7 +24,7 @@ data "aws_iam_policy_document" "allow_read_write" {
       "s3:ListBucketMultipartUploads"
     ]
     resources = [
-      "${aws_s3_bucket.bucket.arn}"
+      "${aws_s3_bucket.bucket[0].arn}"
     ]
   }
 
@@ -37,7 +41,7 @@ data "aws_iam_policy_document" "allow_read_write" {
       "s3:ListMultipartUploadParts",
     ]
     resources = [
-      "${aws_s3_bucket.bucket.arn}/*"
+      "${aws_s3_bucket.bucket[0].arn}/*"
     ]
   }
 }

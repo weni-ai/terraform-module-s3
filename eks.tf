@@ -1,5 +1,5 @@
 module "iam_eks_role" {
-  count = length(var.create_iam_eks_role)
+  count = var.create && length(var.create_iam_eks_role) > 0 ? 1 : 0
 
   source = "terraform-aws-modules/iam/aws//modules/iam-eks-role"
 
