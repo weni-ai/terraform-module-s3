@@ -6,6 +6,6 @@ module "iam_eks_role" {
   role_name                = var.bucket_name
   cluster_service_accounts = var.create_iam_eks_role
   role_policy_arns = {
-    (aws_iam_policy.bucket_rw[0].name) = aws_iam_policy.bucket_rw[0].arn
+    for idx, policy in aws_iam_policy.bucket_rw : aws_iam_policy.bucket_rw[idx].name => aws_iam_policy.bucket_rw[idx].arn
   }
 }

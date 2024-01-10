@@ -83,6 +83,7 @@ variable "cors_rules" {
       max_age_seconds = 3000
     }
   ]
+  nullable = false
 }
 
 variable "tags" {
