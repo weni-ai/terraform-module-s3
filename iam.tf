@@ -2,6 +2,7 @@ resource "aws_iam_user" "bucket_user" {
   count = var.create && var.create_iam_user ? 1 : 0
 
   name = var.bucket_name
+  tags = local.common_tags
 }
 
 resource "aws_iam_access_key" "bucket_access_key" {

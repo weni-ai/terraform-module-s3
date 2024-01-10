@@ -3,7 +3,13 @@ resource "aws_s3_bucket" "bucket" {
 
   bucket = var.bucket_name
 
-  tags = local.common_tags
+  tags = merge(
+    local.common_tags,
+    {
+      Name = var.bucket_name
+    }
+  )
+
   lifecycle {
     ignore_changes = [
       tags["CreateTimestamp"]
