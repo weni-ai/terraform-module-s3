@@ -3,6 +3,12 @@ resource "aws_iam_user" "bucket_user" {
 
   name = var.bucket_name
   tags = local.common_tags
+
+  lifecycle {
+    ignore_changes = [
+      tags["CreateTimestamp"]
+    ]
+  }
 }
 
 resource "aws_iam_access_key" "bucket_access_key" {
