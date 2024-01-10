@@ -33,6 +33,8 @@ resource "aws_s3_bucket_intelligent_tiering_configuration" "bucket_tiering" {
 }
 
 resource "aws_s3_bucket_policy" "bucket_policy" {
+  count = var.bucket_acl == "public-read" ? 1 : 0
+
   bucket = aws_s3_bucket.bucket.id
   policy = data.aws_iam_policy_document.allow_public_access.json
 }
