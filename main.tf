@@ -17,11 +17,15 @@ resource "aws_s3_bucket" "bucket" {
   }
 }
 
-resource "aws_s3_bucket_acl" "bucket_acl" {
+resource "aws_s3_bucket_public_access_block" "bucket_restrict_access" {
   count = var.create ? 1 : 0
 
   bucket = aws_s3_bucket.bucket[0].id
-  acl    = var.bucket_acl
+
+  block_public_acls       = var.bucket_type == "private" ? true : false
+  block_public_policy     = var.bucket_type == "private" ? true : false
+  ignore_public_acls      = var.bucket_type == "private" ? true : false
+  restrict_public_buckets = var.bucket_type == "private" ? true : false
 }
 
 resource "aws_s3_bucket_intelligent_tiering_configuration" "bucket_tiering" {
@@ -44,13 +48,13 @@ resource "aws_s3_bucket_intelligent_tiering_configuration" "bucket_tiering" {
 }
 
 resource "aws_s3_bucket_policy" "bucket_policy" {
-  count = var.create && var.bucket_acl == "public-read" ? 1 : 0
+  count = var.create && var.bucket_type == "public" ? 1 : 0
 
   bucket = aws_s3_bucket.bucket[0].id
   policy = data.aws_iam_policy_document.allow_public_access[0].json
 }
 
-resource "aws_s3_bucket_cors_configuration" "cors" {
+resource "aws_s3_bucket_cors_configuration" "bucket_cors" {
   count  = var.create && length(var.cors_rules) > 0 ? 1 : 0
   bucket = aws_s3_bucket.bucket[0].id
 

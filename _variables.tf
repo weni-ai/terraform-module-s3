@@ -7,13 +7,13 @@ variable "bucket_name" {
   type = string
 }
 
-variable "bucket_acl" {
+variable "bucket_type" {
   type    = string
   default = "private"
 
   validation {
-    condition     = var.bucket_acl == "public-read" || var.bucket_acl == "private"
-    error_message = "Valid values are 'public-read' or 'private'"
+    condition     = var.bucket_type == "public" || var.bucket_type == "private"
+    error_message = "Valid values are 'public' or 'private'"
   }
 }
 
