@@ -5,12 +5,17 @@ data "aws_iam_policy_document" "allow_public_access" {
     sid = "AllowGetPublic"
     actions = [
       "s3:GetObject",
-      "s3:GetObjectAcl",
     ]
 
     resources = [
+      "${aws_s3_bucket.bucket[0].arn}",
       "${aws_s3_bucket.bucket[0].arn}/*",
     ]
+
+    principals {
+      type        = "AWS"
+      identifiers = ["*"]
+    }
   }
 }
 
