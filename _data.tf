@@ -1,5 +1,5 @@
 data "aws_iam_policy_document" "allow_public_access" {
-  count = var.create && (var.create_iam_user || length(var.create_iam_eks_role) > 0) ? 1 : 0
+  count = var.create && var.bucket_type == "public" ? 1 : 0
 
   statement {
     sid = "AllowGetPublic"
