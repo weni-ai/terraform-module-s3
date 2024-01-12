@@ -1,63 +1,73 @@
-/**
- * # terraform-module-s3
- *
- * Este módulo cria um S3 bucket com suporte para versioning, lifecycles, ACL, bucket object policies.
- *
- * Se a variável enable for definida como true, o módulo provisionará um usuário e secretes do IAM com permissões para acessar o bucket. Os usuários ou sistemas que têm credenciais do IAM devem receber acesso diretamente com base em sua identidade do IAM por meio de private_principal_arns ou ser autorizados a assumir uma função do IAM com acesso.
- * Não recomendamos criar usuários do IAM dessa forma para qualquer outra finalidade. 
- *
- * ## Começando com bucket simples.
- * ```sh
- * module "bucket" {
- *   source      = "git::https://github.com/weni-ai/terraform-module-s3.git"
- *   bucketname  = "bucket-xpto"
- *   environment = "your environmet"
- *   squad       = "your name squad"
- * }
- * ```
- * ## Começando com bucket e role para o eks.
- * ```sh
- * module "bucket" {
- *   source  = "git::https://github.com/weni-ai/terraform-module-s3.git"
- *   bucketname = "bucket-xpto"
- *   environment = "nome do ambiente"
- *   squad       = "nome da squad"
- *   eks = [
- *     {
- *       cluster   = "nome do cluster"
- *       namespace = "nome do name space"
- *       sa        = "nome do service account"
- *    }
- *  ]
- * }
- * ```
- */
-#tfsec:ignore:aws-s3-enable-bucket-encryption tfsec:ignore:aws-s3-enable-bucket-logging tfsec:ignore:aws-s3-block-public-acls tfsec:ignore:aws-s3-block-public-policy tfsec:ignore:aws-s3-ignore-public-acls tfsec:ignore:aws-s3-no-public-buckets tfsec:ignore:aws-s3-encryption-customer-key tfsec:ignore:aws-s3-enable-versioning tfsec:ignore:aws-iam-no-user-attached-policies tfsec:ignore:aws-s3-specify-public-access-block
 resource "aws_s3_bucket" "bucket" {
-  count  = var.enable ? 1 : 0
-  bucket = join("-", ["weni", var.environment, var.bucketname])
-  tags   = local.common_tags
+  count = var.create ? 1 : 0
+
+  bucket = var.bucket_name
+
+  tags = merge(
+    local.common_tags,
+    {
+      Name = var.bucket_name
+    }
+  )
+
   lifecycle {
     ignore_changes = [
-      tags.Created
+      tags["CreateTimestamp"]
     ]
   }
 }
 
-resource "aws_s3_bucket_intelligent_tiering_configuration" "tiering_bucket" {
-  count  = var.enable ? 1 : 0
+resource "aws_s3_bucket_public_access_block" "bucket_restrict_access" {
+  count = var.create ? 1 : 0
+
   bucket = aws_s3_bucket.bucket[0].id
-  name   = "Intelligent-Tiering"
+
+  block_public_acls       = var.bucket_type == "private" ? true : false
+  block_public_policy     = var.bucket_type == "private" ? true : false
+  ignore_public_acls      = var.bucket_type == "private" ? true : false
+  restrict_public_buckets = var.bucket_type == "private" ? true : false
+}
+
+resource "aws_s3_bucket_intelligent_tiering_configuration" "bucket_tiering" {
+  count = var.create ? 1 : 0
+
+  bucket = aws_s3_bucket.bucket[0].id
+  name   = "EntireBucket"
 
   tiering {
     access_tier = "DEEP_ARCHIVE_ACCESS"
-    days        = var.deep_archive_access
+    days        = var.tiering_deep_archive_access
   }
+
   tiering {
     access_tier = "ARCHIVE_ACCESS"
-    days        = var.archive_access
+    days        = var.tiering_archive_access
   }
+
+  status = var.tiering_enabled ? "Enabled" : "Disabled"
 }
 
-// vim: nu ts=2 fdm=indent noet ft=terraform:
+resource "aws_s3_bucket_policy" "bucket_policy" {
+  count = var.create && var.bucket_type == "public" ? 1 : 0
 
+  bucket = aws_s3_bucket.bucket[0].id
+  policy = data.aws_iam_policy_document.allow_public_access[0].json
+}
+
+resource "aws_s3_bucket_cors_configuration" "bucket_cors" {
+  count  = var.create && length(var.cors_rules) > 0 ? 1 : 0
+  bucket = aws_s3_bucket.bucket[0].id
+
+  dynamic "cors_rule" {
+    for_each = var.cors_rules
+
+    content {
+      id              = try(cors_rule.value.id, null)
+      allowed_methods = cors_rule.value.allowed_methods
+      allowed_origins = cors_rule.value.allowed_origins
+      allowed_headers = try(cors_rule.value.allowed_headers, null)
+      expose_headers  = try(cors_rule.value.expose_headers, null)
+      max_age_seconds = try(cors_rule.value.max_age_seconds, null)
+    }
+  }
+}

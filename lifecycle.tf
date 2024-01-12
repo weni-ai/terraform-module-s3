@@ -1,41 +1,37 @@
-resource "aws_s3_bucket_lifecycle_configuration" "lifecycle_config" {
+resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
+  count = var.create ? 1 : 0
+
   bucket = aws_s3_bucket.bucket[0].id
-  count  = var.enable ? 1 : 0
 
   rule {
-    id = "move to Glacier Instant Retrieval after x days"
+    id = "Transition to Glacier Instant Retrieval"
 
     transition {
-      days          = var.glacier-days
       storage_class = "GLACIER_IR"
+      days          = var.glacier_days
     }
 
-    status = var.glacier-enable
+    status = var.glacier_enabled ? "Enabled" : "Disabled"
   }
 
   rule {
-    id = "move to Standard-Infrequent Access after x days"
+    id = "Transition to Standard-IA"
 
     transition {
-      days          = var.ia-days
       storage_class = "STANDARD_IA"
+      days          = var.infrequent_access_days
     }
 
-    status = var.ia-enable
+    status = var.infrequent_access_enabled ? "Enabled" : "Disabled"
   }
 
   rule {
-    id = "delete all files after x days"
+    id = "Expires"
 
     expiration {
-      days = var.delete-days
+      days = var.expiration_objects_days
     }
 
-    status = var.delete-enable
+    status = var.expiration_objects_enabled ? "Enabled" : "Disabled"
   }
 }
-
-## Para entender as classes de armazenamento, consulte a seguinte documentação: https://aws.amazon.com/pt/s3/storage-classes/
-
-// vim: nu ts=2 fdm=indent noet ft=terraform:
-
