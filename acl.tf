@@ -29,7 +29,7 @@ resource "aws_s3_bucket_acl" "grant_owner_to_iam" {
     }
 
     owner {
-      id = aws_s3_bucket.bucket[0].id
+      id = aws_iam_user.bucket_user[0].id
     }
   }
 }
