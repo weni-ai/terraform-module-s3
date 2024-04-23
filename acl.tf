@@ -17,7 +17,7 @@ resource "aws_s3_bucket_acl" "grant_owner_to_iam" {
   access_control_policy {
     grant {
       grantee {
-        id   = aws_iam_user.bucket_user[0].unique_id
+        id   = aws_iam_user.bucket_user[0].arn
         type = "CanonicalUser"
       }
       permission = "WRITE_ACP"
@@ -32,7 +32,7 @@ resource "aws_s3_bucket_acl" "grant_owner_to_iam" {
     }
 
     owner {
-      id = aws_iam_user.bucket_user[0].unique_id
+      id = aws_iam_user.bucket_user[0].arn
     }
   }
 }
