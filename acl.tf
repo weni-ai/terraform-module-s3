@@ -8,7 +8,10 @@ resource "aws_s3_bucket_ownership_controls" "bucket_acl" {
 
 resource "aws_s3_bucket_acl" "grant_owner_to_iam" {
   count = var.create && var.create_iam_user && var.create_iam_user_write_acl ? 1 : 0
-  depends_on = [aws_s3_bucket_ownership_controls.bucket_acl[0]]
+  depends_on = [
+    aws_s3_bucket_ownership_controls.bucket_acl[0],
+    aws_iam_user.bucket_user[0],
+  ]
 
   bucket = aws_s3_bucket.bucket[0].id
   access_control_policy {
