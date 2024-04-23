@@ -67,6 +67,12 @@ variable "create_iam_user" {
   default = false
 }
 
+variable "create_iam_user_write_acl" {
+  type    = bool
+  default = false
+  description = "If iam user can use WRITE_ACP on bucket"
+}
+
 variable "create_iam_eks_role" {
   type    = map(any)
   default = {}
