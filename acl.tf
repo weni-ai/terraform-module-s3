@@ -2,7 +2,7 @@ resource "aws_s3_bucket_ownership_controls" "bucket_acl" {
   count = var.create && var.create_iam_user && var.create_iam_user_write_acl ? 1 : 0
   bucket = aws_s3_bucket.bucket[0].id
   rule {
-    object_ownership = "BucketOwnerPreferred"
+    object_ownership = "ObjectWriter"
   }
 }
 
@@ -17,7 +17,7 @@ resource "aws_s3_bucket_acl" "grant_owner_to_iam" {
   access_control_policy {
     grant {
       grantee {
-        id   = aws_iam_user.bucket_user[0].arn
+        id   = data.aws_canonical_user_id.current.id
         type = "CanonicalUser"
       }
       permission = "WRITE_ACP"
@@ -32,7 +32,7 @@ resource "aws_s3_bucket_acl" "grant_owner_to_iam" {
     }
 
     owner {
-      id = aws_iam_user.bucket_user[0].arn
+      id = data.aws_canonical_user_id.current.id
     }
   }
 }

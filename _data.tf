@@ -50,3 +50,5 @@ data "aws_iam_policy_document" "allow_read_write" {
     ]
   }
 }
+
+data "aws_canonical_user_id" "current" {}
