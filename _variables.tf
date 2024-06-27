@@ -32,22 +32,32 @@ variable "tiering_archive_access" {
   default = 90
 }
 
-variable "glacier_enabled" {
-  type    = bool
-  default = false
-}
-
-variable "glacier_days" {
-  type    = number
-  default = 7
-}
-
 variable "infrequent_access_enabled" {
   type    = bool
   default = false
 }
 
 variable "infrequent_access_days" {
+  type    = number
+  default = 7
+}
+
+variable "intelligent_tiering_enabled" {
+  type    = bool
+  default = false
+}
+
+variable "intelligent_tiering_days" {
+  type    = number
+  default = 7
+}
+
+variable "glacier_enabled" {
+  type    = bool
+  default = false
+}
+
+variable "glacier_days" {
   type    = number
   default = 30
 }

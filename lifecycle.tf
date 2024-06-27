@@ -4,6 +4,17 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
   bucket = aws_s3_bucket.bucket[0].id
 
   rule {
+    id = "Transition to Standard-IA"
+
+    transition {
+      storage_class = "STANDARD_IA"
+      days          = var.infrequent_access_days
+    }
+
+    status = var.infrequent_access_enabled ? "Enabled" : "Disabled"
+  }
+
+  rule {
     id = "Transition to Glacier Instant Retrieval"
 
     transition {
@@ -15,14 +26,14 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
   }
 
   rule {
-    id = "Transition to Standard-IA"
+    id = "Transition to Intelligent Tiering"
 
     transition {
-      storage_class = "STANDARD_IA"
-      days          = var.infrequent_access_days
+      storage_class = "INTELLIGENT_TIERING"
+      days          = var.intelligent_tiering_days
     }
 
-    status = var.infrequent_access_enabled ? "Enabled" : "Disabled"
+    status = var.intelligent_tiering_enabled ? "Enabled" : "Disabled"
   }
 
   rule {
