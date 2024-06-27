@@ -110,10 +110,12 @@ No requirements.
 | <a name="input_create_iam_user_write_acl"></a> [create\_iam\_user\_write\_acl](#input\_create\_iam\_user\_write\_acl) | If iam user can use WRITE\_ACP on bucket | `bool` | `false` | no |
 | <a name="input_expiration_objects_days"></a> [expiration\_objects\_days](#input\_expiration\_objects\_days) | n/a | `number` | `90` | no |
 | <a name="input_expiration_objects_enabled"></a> [expiration\_objects\_enabled](#input\_expiration\_objects\_enabled) | n/a | `bool` | `false` | no |
-| <a name="input_glacier_days"></a> [glacier\_days](#input\_glacier\_days) | n/a | `number` | `7` | no |
+| <a name="input_glacier_days"></a> [glacier\_days](#input\_glacier\_days) | n/a | `number` | `30` | no |
 | <a name="input_glacier_enabled"></a> [glacier\_enabled](#input\_glacier\_enabled) | n/a | `bool` | `false` | no |
-| <a name="input_infrequent_access_days"></a> [infrequent\_access\_days](#input\_infrequent\_access\_days) | n/a | `number` | `30` | no |
+| <a name="input_infrequent_access_days"></a> [infrequent\_access\_days](#input\_infrequent\_access\_days) | n/a | `number` | `7` | no |
 | <a name="input_infrequent_access_enabled"></a> [infrequent\_access\_enabled](#input\_infrequent\_access\_enabled) | n/a | `bool` | `false` | no |
+| <a name="input_intelligent_tiering_days"></a> [intelligent\_tiering\_days](#input\_intelligent\_tiering\_days) | n/a | `number` | `7` | no |
+| <a name="input_intelligent_tiering_enabled"></a> [intelligent\_tiering\_enabled](#input\_intelligent\_tiering\_enabled) | n/a | `bool` | `false` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(string)` | `{}` | no |
 | <a name="input_tiering_archive_access"></a> [tiering\_archive\_access](#input\_tiering\_archive\_access) | n/a | `number` | `90` | no |
 | <a name="input_tiering_deep_archive_access"></a> [tiering\_deep\_archive\_access](#input\_tiering\_deep\_archive\_access) | n/a | `number` | `180` | no |
