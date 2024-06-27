@@ -17,9 +17,9 @@ variable "bucket_type" {
   }
 }
 
-variable "tiering_enabled" {
+variable "tiering_archive_enabled" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "tiering_deep_archive_access" {
