@@ -17,21 +17,12 @@ variable "bucket_type" {
   }
 }
 
-variable "tiering_enabled" {
-  type    = bool
-  default = true
+variable "intelligent_tiering" {
+  type    = list(any)
+  default = []
 }
 
-variable "tiering_deep_archive_access" {
-  type    = number
-  default = 180
-}
-
-variable "tiering_archive_access" {
-  type    = number
-  default = 90
-}
-
+# lifecycle
 variable "infrequent_access_enabled" {
   type    = bool
   default = false
