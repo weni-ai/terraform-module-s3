@@ -113,13 +113,11 @@ No requirements.
 | <a name="input_glacier_days"></a> [glacier\_days](#input\_glacier\_days) | n/a | `number` | `30` | no |
 | <a name="input_glacier_enabled"></a> [glacier\_enabled](#input\_glacier\_enabled) | n/a | `bool` | `false` | no |
 | <a name="input_infrequent_access_days"></a> [infrequent\_access\_days](#input\_infrequent\_access\_days) | n/a | `number` | `7` | no |
-| <a name="input_infrequent_access_enabled"></a> [infrequent\_access\_enabled](#input\_infrequent\_access\_enabled) | n/a | `bool` | `false` | no |
+| <a name="input_infrequent_access_enabled"></a> [infrequent\_access\_enabled](#input\_infrequent\_access\_enabled) | lifecycle | `bool` | `false` | no |
+| <a name="input_intelligent_tiering"></a> [intelligent\_tiering](#input\_intelligent\_tiering) | n/a | `list(any)` | `[]` | no |
 | <a name="input_intelligent_tiering_days"></a> [intelligent\_tiering\_days](#input\_intelligent\_tiering\_days) | n/a | `number` | `7` | no |
 | <a name="input_intelligent_tiering_enabled"></a> [intelligent\_tiering\_enabled](#input\_intelligent\_tiering\_enabled) | n/a | `bool` | `false` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(string)` | `{}` | no |
-| <a name="input_tiering_archive_access"></a> [tiering\_archive\_access](#input\_tiering\_archive\_access) | n/a | `number` | `90` | no |
-| <a name="input_tiering_deep_archive_access"></a> [tiering\_deep\_archive\_access](#input\_tiering\_deep\_archive\_access) | n/a | `number` | `180` | no |
-| <a name="input_tiering_enabled"></a> [tiering\_enabled](#input\_tiering\_enabled) | n/a | `bool` | `true` | no |
 
 ## Outputs
 
