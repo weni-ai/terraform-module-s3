@@ -114,7 +114,7 @@ No requirements.
 | <a name="input_glacier_enabled"></a> [glacier\_enabled](#input\_glacier\_enabled) | n/a | `bool` | `false` | no |
 | <a name="input_infrequent_access_days"></a> [infrequent\_access\_days](#input\_infrequent\_access\_days) | n/a | `number` | `7` | no |
 | <a name="input_infrequent_access_enabled"></a> [infrequent\_access\_enabled](#input\_infrequent\_access\_enabled) | lifecycle | `bool` | `false` | no |
-| <a name="input_intelligent_tiering"></a> [intelligent\_tiering](#input\_intelligent\_tiering) | n/a | `list(any)` | `[]` | no |
+| <a name="input_intelligent_tiering"></a> [intelligent\_tiering](#input\_intelligent\_tiering) | n/a | `list` | `[]` | no |
 | <a name="input_intelligent_tiering_days"></a> [intelligent\_tiering\_days](#input\_intelligent\_tiering\_days) | n/a | `number` | `7` | no |
 | <a name="input_intelligent_tiering_enabled"></a> [intelligent\_tiering\_enabled](#input\_intelligent\_tiering\_enabled) | n/a | `bool` | `false` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(string)` | `{}` | no |
