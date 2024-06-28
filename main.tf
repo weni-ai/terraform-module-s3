@@ -29,7 +29,7 @@ resource "aws_s3_bucket_public_access_block" "bucket_restrict_access" {
 }
 
 resource "aws_s3_bucket_intelligent_tiering_configuration" "bucket_tiering" {
-  count = var.create ? 1 : 0
+  count = var.create && length(var.intelligent_tiering)>0 ? 1 : 0
 
   bucket = aws_s3_bucket.bucket[0].id
   name   = "EntireBucket"
