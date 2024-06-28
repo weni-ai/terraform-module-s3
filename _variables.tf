@@ -18,7 +18,7 @@ variable "bucket_type" {
 }
 
 variable "intelligent_tiering" {
-  type    = list(any)
+  #type    = list(any)
   default = []
 }
 
