@@ -80,7 +80,7 @@ variable "create_iam_eks_role" {
 }
 
 variable "cors_rules" {
-  type = list(any)
+  #type = list(any)
   default = [
     {
       allowed_headers = ["*"]
