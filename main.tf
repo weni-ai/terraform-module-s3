@@ -40,7 +40,7 @@ resource "aws_s3_bucket_intelligent_tiering_configuration" "bucket_tiering" {
 
     content {
       access_tier = tiering.key
-      days        = tiering.value.days
+      days        = tiering.value
     }
   }
 
