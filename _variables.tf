@@ -79,6 +79,11 @@ variable "create_iam_eks_role" {
   default = {}
 }
 
+variable "extra_custom_policy" {
+  type    = any
+  default = []
+}
+
 variable "cors_rules" {
   #type = list(any)
   default = [
