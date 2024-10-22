@@ -80,8 +80,8 @@ variable "create_iam_eks_role" {
 }
 
 variable "extra_custom_policy" {
-  type    = any
-  default = []
+  type    = string
+  default = "{}"
 }
 
 variable "cors_rules" {

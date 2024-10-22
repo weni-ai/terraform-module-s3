@@ -51,13 +51,4 @@ data "aws_iam_policy_document" "allow_read_write" {
   }
 }
 
-data "aws_iam_policy_document" "extra_custom_policy" {
-  count = var.create && (var.create_iam_user || length(var.create_iam_eks_role) > 0) ? 1 : 0
-
-  statement = try(
-    var.extra_custom_policy,
-    []
-  )
-}
-
 data "aws_canonical_user_id" "current" {}

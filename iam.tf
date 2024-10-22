@@ -45,7 +45,10 @@ resource "aws_iam_policy" "extra_custom_policy" {
   count = var.create && (var.create_iam_user || length(var.create_iam_eks_role) > 0) ? 1 : 0
 
   name   = "${var.bucket_name}-extra-custom-policy"
-  policy = data.aws_iam_policy_document.extra_custom_policy[0].json
+  policy = try(
+    var.extra_custom_policy,
+    "{}"
+  )
 
   description = "Provides extra custom policy to the '${var.bucket_name}' S3 bucket"
 }
