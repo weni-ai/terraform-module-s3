@@ -80,7 +80,7 @@ variable "create_iam_eks_role" {
 }
 
 variable "extra_custom_policy" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 
