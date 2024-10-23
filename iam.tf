@@ -35,7 +35,7 @@ resource "aws_iam_policy" "bucket_rw" {
 
 // Extra custom policy
 resource "aws_iam_user_policy_attachment" "extra_custom_policy" {
-  count = var.create && length(var.extra_custom_policy) && var.create_iam_user ? 1 : 0
+  count = var.create && length(var.extra_custom_policy)>0 && var.create_iam_user ? 1 : 0
 
   user       = aws_iam_user.bucket_user[0].name
   policy_arn = aws_iam_policy.extra_custom_policy[0].arn

@@ -75,7 +75,7 @@ variable "create_iam_user_write_acl" {
 }
 
 variable "create_iam_eks_role" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 
