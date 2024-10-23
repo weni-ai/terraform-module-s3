@@ -35,17 +35,19 @@ resource "aws_iam_policy" "bucket_rw" {
 
 // Extra custom policy
 resource "aws_iam_user_policy_attachment" "extra_custom_policy" {
-  count = var.create && ( length(var.extra_custom_policy)>2 ) && var.create_iam_user ? 1 : 0
+  count = var.create && length(var.extra_custom_policy) && var.create_iam_user ? 1 : 0
 
   user       = aws_iam_user.bucket_user[0].name
   policy_arn = aws_iam_policy.extra_custom_policy[0].arn
 }
 
 resource "aws_iam_policy" "extra_custom_policy" {
-  count = var.create && ( length(var.extra_custom_policy)>2 ) && (var.create_iam_user || length(var.create_iam_eks_role) > 0) ? 1 : 0
+  count = var.create && length(var.extra_custom_policy) && (var.create_iam_user || length(var.create_iam_eks_role) > 0) ? 1 : 0
 
   name   = "${var.bucket_name}-extra-custom-policy"
-  policy = var.extra_custom_policy
+  policy = jsonencode(
+    var.extra_custom_policy
+  )
 
   description = "Provides extra custom policy to the '${var.bucket_name}' S3 bucket"
 }
