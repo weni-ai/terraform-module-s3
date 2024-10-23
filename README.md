@@ -107,7 +107,7 @@ No requirements.
 | <a name="input_bucket_type"></a> [bucket\_type](#input\_bucket\_type) | n/a | `string` | `"private"` | no |
 | <a name="input_cors_rules"></a> [cors\_rules](#input\_cors\_rules) | n/a | `list` | <pre>[<br>  {<br>    "allowed_headers": [<br>      "*"<br>    ],<br>    "allowed_methods": [<br>      "PUT",<br>      "HEAD",<br>      "POST",<br>      "GET"<br>    ],<br>    "allowed_origins": [<br>      "*.weni.ai"<br>    ],<br>    "expose_headers": [<br>      "ETag",<br>      "Access-Control-Allow-Origin"<br>    ],<br>    "max_age_seconds": 3000<br>  }<br>]</pre> | no |
 | <a name="input_create"></a> [create](#input\_create) | n/a | `bool` | `true` | no |
-| <a name="input_create_iam_eks_role"></a> [create\_iam\_eks\_role](#input\_create\_iam\_eks\_role) | n/a | `map(any)` | `{}` | no |
+| <a name="input_create_iam_eks_role"></a> [create\_iam\_eks\_role](#input\_create\_iam\_eks\_role) | n/a | `any` | `{}` | no |
 | <a name="input_create_iam_user"></a> [create\_iam\_user](#input\_create\_iam\_user) | n/a | `bool` | `false` | no |
 | <a name="input_create_iam_user_write_acl"></a> [create\_iam\_user\_write\_acl](#input\_create\_iam\_user\_write\_acl) | If iam user can use WRITE\_ACP on bucket | `bool` | `false` | no |
 | <a name="input_expiration_objects_days"></a> [expiration\_objects\_days](#input\_expiration\_objects\_days) | n/a | `number` | `90` | no |
