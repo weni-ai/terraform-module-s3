@@ -50,4 +50,12 @@ resource "aws_iam_policy" "extra_custom_policy" {
   )
 
   description = "Provides extra custom policy to the '${var.bucket_name}' S3 bucket"
+
+  tags = local.common_tags
+
+  lifecycle {
+    ignore_changes = [
+      tags["CreateTimestamp"]
+    ]
+  }
 }
