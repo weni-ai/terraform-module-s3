@@ -31,6 +31,14 @@ resource "aws_iam_policy" "bucket_rw" {
   policy = data.aws_iam_policy_document.allow_read_write[0].json
 
   description = "Provides read-write access to the '${var.bucket_name}' S3 bucket"
+
+  tags = local.common_tags
+
+  lifecycle {
+    ignore_changes = [
+      tags["CreateTimestamp"]
+    ]
+  }
 }
 
 // Extra custom policy
