@@ -84,6 +84,7 @@ No requirements.
 | [aws_iam_access_key.bucket_access_key](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key) | resource |
 | [aws_iam_policy.bucket_rw](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
 | [aws_iam_policy.extra_custom_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy) | resource |
+| [aws_iam_role_policy_attachment.attach-policy-to-role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
 | [aws_iam_user.bucket_user](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user) | resource |
 | [aws_iam_user_policy_attachment.bucket_user_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.extra_custom_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
@@ -96,6 +97,7 @@ No requirements.
 | [aws_s3_bucket_policy.bucket_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy) | resource |
 | [aws_s3_bucket_public_access_block.bucket_restrict_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block) | resource |
 | [aws_canonical_user_id.current](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/canonical_user_id) | data source |
+| [aws_iam_policy.policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy) | data source |
 | [aws_iam_policy_document.allow_public_access](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 | [aws_iam_policy_document.allow_read_write](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document) | data source |
 
@@ -113,6 +115,7 @@ No requirements.
 | <a name="input_expiration_objects_days"></a> [expiration\_objects\_days](#input\_expiration\_objects\_days) | n/a | `number` | `90` | no |
 | <a name="input_expiration_objects_enabled"></a> [expiration\_objects\_enabled](#input\_expiration\_objects\_enabled) | n/a | `bool` | `false` | no |
 | <a name="input_extra_custom_policy"></a> [extra\_custom\_policy](#input\_extra\_custom\_policy) | n/a | `any` | `{}` | no |
+| <a name="input_extra_policy"></a> [extra\_policy](#input\_extra\_policy) | n/a | `list(string)` | `[]` | no |
 | <a name="input_glacier_days"></a> [glacier\_days](#input\_glacier\_days) | n/a | `number` | `30` | no |
 | <a name="input_glacier_enabled"></a> [glacier\_enabled](#input\_glacier\_enabled) | n/a | `bool` | `false` | no |
 | <a name="input_infrequent_access_days"></a> [infrequent\_access\_days](#input\_infrequent\_access\_days) | n/a | `number` | `7` | no |
