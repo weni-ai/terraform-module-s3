@@ -6,7 +6,7 @@ data "aws_iam_policy" "policy" {
     try(var.extra_policy[*], [])
   ))
   name = each.value
-  tags = local.common_tags
+  #tags = local.common_tags
 
   depends_on = [
     resource.aws_iam_policy.extra_custom_policy
