@@ -24,5 +24,5 @@ resource "aws_iam_role_policy_attachment" "attach-policy-to-role" {
   #role = aws_iam_role.role[each.value.role_key].name
   role = var.bucket_name
 
-  policy_arn = data.aws_iam_policy.policy[each.value.policy_key].arn
+  policy_arn = data.aws_iam_policy.policy[each.value].arn
 }
