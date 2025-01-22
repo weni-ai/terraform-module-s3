@@ -84,6 +84,11 @@ variable "extra_custom_policy" {
   default = {}
 }
 
+variable "extra_policy" {
+  type    = list(string)
+  default = []
+}
+
 variable "cors_rules" {
   #type = list(any)
   default = [
