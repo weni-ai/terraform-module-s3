@@ -13,7 +13,7 @@ module "iam_eks_role" {
     }
   )
 
-  tags = local.common_tags
+  #tags = local.common_tags
 
   #lifecycle {
   #  ignore_changes = [
