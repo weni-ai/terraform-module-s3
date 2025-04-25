@@ -124,6 +124,9 @@ No requirements.
 | <a name="input_intelligent_tiering_days"></a> [intelligent\_tiering\_days](#input\_intelligent\_tiering\_days) | n/a | `number` | `7` | no |
 | <a name="input_intelligent_tiering_enabled"></a> [intelligent\_tiering\_enabled](#input\_intelligent\_tiering\_enabled) | n/a | `bool` | `false` | no |
 | <a name="input_tags"></a> [tags](#input\_tags) | n/a | `map(string)` | `{}` | no |
+| <a name="input_tiering_archive_access"></a> [tiering\_archive\_access](#input\_tiering\_archive\_access) | n/a | `number` | `90` | no |
+| <a name="input_tiering_archive_enabled"></a> [tiering\_archive\_enabled](#input\_tiering\_archive\_enabled) | n/a | `bool` | `false` | no |
+| <a name="input_tiering_deep_archive_access"></a> [tiering\_deep\_archive\_access](#input\_tiering\_deep\_archive\_access) | n/a | `number` | `180` | no |
 
 ## Outputs
 
