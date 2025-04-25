@@ -29,22 +29,32 @@ resource "aws_s3_bucket_public_access_block" "bucket_restrict_access" {
 }
 
 resource "aws_s3_bucket_intelligent_tiering_configuration" "bucket_tiering" {
-  count = var.create ? 1 : 0
+  count = var.create && length(var.intelligent_tiering)>0 ? 1 : 0
 
   bucket = aws_s3_bucket.bucket[0].id
   name   = "EntireBucket"
 
-  tiering {
-    access_tier = "DEEP_ARCHIVE_ACCESS"
-    days        = var.tiering_deep_archive_access
+
+  dynamic "tiering" {
+    for_each = var.intelligent_tiering
+
+    content {
+      access_tier = tiering.key
+      days        = tiering.value
+    }
   }
 
-  tiering {
-    access_tier = "ARCHIVE_ACCESS"
-    days        = var.tiering_archive_access
-  }
+  #tiering {
+  #  access_tier = "DEEP_ARCHIVE_ACCESS"
+  #  days        = var.tiering_deep_archive_access
+  #}
 
-  status = var.tiering_enabled ? "Enabled" : "Disabled"
+  #tiering {
+  #  access_tier = "ARCHIVE_ACCESS"
+  #  days        = var.tiering_archive_access
+  #}
+
+  status = length(var.intelligent_tiering)>0 ? "Enabled" : "Disabled"
 }
 
 resource "aws_s3_bucket_policy" "bucket_policy" {

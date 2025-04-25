@@ -32,6 +32,12 @@ variable "tiering_archive_access" {
   default = 90
 }
 
+variable "intelligent_tiering" {
+  #type    = list(any)
+  default = []
+}
+
+# lifecycle
 variable "infrequent_access_enabled" {
   type    = bool
   default = false
@@ -84,12 +90,22 @@ variable "create_iam_user_write_acl" {
 }
 
 variable "create_iam_eks_role" {
-  type    = map(any)
+  type    = any
   default = {}
 }
 
+variable "extra_custom_policy" {
+  type    = any
+  default = {}
+}
+
+variable "extra_policy" {
+  type    = list(string)
+  default = []
+}
+
 variable "cors_rules" {
-  type = list(any)
+  #type = list(any)
   default = [
     {
       allowed_headers = ["*"]
