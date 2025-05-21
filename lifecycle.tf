@@ -72,7 +72,10 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
       }
 
       dynamic "expiration" {
-        for_each = lookup(rule.value, "expiration", {})
+        for_each = try(
+          rule.value.expiration,
+          {}
+        )
 
         content {
           date                         = try(
@@ -88,7 +91,10 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
       }
 
       dynamic "noncurrent_version_expiration" {
-        for_each = lookup(rule.value, "noncurrent_version_expiration", {})
+        for_each = try(
+          rule.value.noncurrent_version_expiration,
+          {}
+        )
 
         content {
           noncurrent_days = try(
@@ -100,7 +106,10 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
       }
 
       dynamic "noncurrent_version_transition" {
-        for_each = lookup(rule.value, "noncurrent_version_transition", {})
+        for_each = try(
+          rule.value.noncurrent_version_transition,
+          {}
+        )
 
         content {
           noncurrent_days = try(
@@ -113,7 +122,10 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
       }
 
       dynamic "transition" {
-        for_each = lookup(rule.value, "transition", {})
+        for_each = try(
+          rule.value.transition,
+          {}
+        )
 
         content {
           days          = try(
