@@ -58,7 +58,9 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
       )==true ? "Enabled" : "Disabled"
 
       dynamic "filter" {
-        for_each = try(rule.value.prefix, null) == null ? [] : toset(["0"])
+        for_each = try(
+          rule.value.prefix, null) == null ? [] : toset(["0"]
+        )
 
         content {
           prefix = lookup(rule.value, "prefix", null)
@@ -73,9 +75,15 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
         for_each = lookup(rule.value, "expiration", {})
 
         content {
-          date                         = lookup(expiration.value, "date", null)
-          days                         = lookup(expiration.value, "days", null)
-          expired_object_delete_marker = lookup(expiration.value, "expired_object_delete_marker", false)
+          date                         = try(
+            expiration.value.date,
+            null
+          )
+          days                         = try(
+            expiration.value.days,
+            expiration.value,
+            null
+          )
         }
       }
 
@@ -83,7 +91,11 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
         for_each = lookup(rule.value, "noncurrent_version_expiration", {})
 
         content {
-          noncurrent_days = lookup(noncurrent_version_expiration.value, "days", null)
+          noncurrent_days = try(
+            noncurrent_version_expiration.value.days,
+            noncurrent_version_expiration.value,
+            null
+          )
         }
       }
 
@@ -91,8 +103,12 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
         for_each = lookup(rule.value, "noncurrent_version_transition", {})
 
         content {
-          noncurrent_days = lookup(noncurrent_version_transition.value, "days", null)
-          storage_class   = noncurrent_version_transition.value.storage_class
+          noncurrent_days = try(
+            noncurrent_version_transition.value.days,
+            noncurrent_version_transition.value,
+            null
+          )
+          storage_class   = noncurrent_version_transition.key
         }
       }
 
@@ -100,9 +116,12 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
         for_each = lookup(rule.value, "transition", {})
 
         content {
-          date          = lookup(transition.value, "date", null)
-          days          = lookup(transition.value, "days", null)
-          storage_class = transition.value.storage_class
+          days          = try(
+            transition.value.days,
+            transition.value,
+            null
+          )
+          storage_class = transition.key
         }
       }
     }
