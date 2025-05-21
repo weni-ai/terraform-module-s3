@@ -71,38 +71,24 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
         }
       }
 
-      dynamic "expiration" {
-        for_each = try(
-          rule.value.expiration,
-          {}
+      expiration {
+        date                         = try(
+          rule.value.expiration.date,
+          null
         )
-
-        content {
-          date                         = try(
-            expiration.value.date,
-            null
-          )
-          days                         = try(
-            expiration.value.days,
-            expiration.value,
-            null
-          )
-        }
+        days                         = try(
+          rule.value.expiration.days,
+          rule.value.expiration,
+          null
+        )
       }
 
-      dynamic "noncurrent_version_expiration" {
-        for_each = try(
+      noncurrent_version_expiration {
+        noncurrent_days = try(
+          rule.value.noncurrent_version_expiration.days,
           rule.value.noncurrent_version_expiration,
-          {}
+          null
         )
-
-        content {
-          noncurrent_days = try(
-            noncurrent_version_expiration.value.days,
-            noncurrent_version_expiration.value,
-            null
-          )
-        }
       }
 
       dynamic "noncurrent_version_transition" {
