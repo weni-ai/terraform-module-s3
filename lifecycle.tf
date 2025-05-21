@@ -47,7 +47,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
   }
 
   dynamic "rule" {
-    for_each = var.extra_lifecycle
+    for_each = length(var.extra_lifecycle) == 0 ? [] : var.extra_lifecycle
 
     content {
       id          = rule.key
