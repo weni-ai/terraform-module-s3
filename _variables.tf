@@ -99,6 +99,11 @@ variable "extra_custom_policy" {
   default = {}
 }
 
+variable "extra_lifecycle" {
+  type    = any
+  default = {}
+}
+
 variable "extra_policy" {
   type    = list(string)
   default = []

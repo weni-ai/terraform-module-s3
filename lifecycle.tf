@@ -45,4 +45,40 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
 
     status = var.expiration_objects_enabled ? "Enabled" : "Disabled"
   }
+
+  dynamic "rule" {
+    for_each = var.extra_lifecycle
+
+    content {
+      id          = rule.key
+
+      status      = try(
+        rule.enabled,
+        true
+      )==true ? "Enabled" : "Disabled"
+
+      filter      = try(
+        rule.filter,
+        null
+      )
+
+      transition  = try(
+        rule.noncurrent_version_transition,
+        null
+      )
+      noncurrent_version_transition = try(
+        rule.transition,
+        null
+      )
+
+      expiration  = try(
+        rule.expiration,
+        null
+      )
+      noncurrent_version_expiration = try(
+        rule.noncurrent_version_expiration,
+        null
+      )
+    }
+  }
 }
