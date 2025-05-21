@@ -57,28 +57,54 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
         true
       )==true ? "Enabled" : "Disabled"
 
-      filter      = try(
-        rule.filter,
-        null
-      )
+      dynamic "filter" {
+        for_each = try(rule.value.prefix, null) == null ? [] : toset(["0"])
 
-      transition  = try(
-        rule.noncurrent_version_transition,
-        null
-      )
-      noncurrent_version_transition = try(
-        rule.transition,
-        null
-      )
+        content {
+          prefix = lookup(rule.value, "prefix", null)
 
-      expiration  = try(
-        rule.expiration,
-        null
-      )
-      noncurrent_version_expiration = try(
-        rule.noncurrent_version_expiration,
-        null
-      )
+          and {
+            tags = lookup(rule.value, "tags", null)
+          }
+        }
+      }
+
+      dynamic "expiration" {
+        for_each = lookup(rule.value, "expiration", {})
+
+        content {
+          date                         = lookup(expiration.value, "date", null)
+          days                         = lookup(expiration.value, "days", null)
+          expired_object_delete_marker = lookup(expiration.value, "expired_object_delete_marker", false)
+        }
+      }
+
+      dynamic "noncurrent_version_expiration" {
+        for_each = lookup(rule.value, "noncurrent_version_expiration", {})
+
+        content {
+          noncurrent_days = lookup(noncurrent_version_expiration.value, "days", null)
+        }
+      }
+
+      dynamic "noncurrent_version_transition" {
+        for_each = lookup(rule.value, "noncurrent_version_transition", {})
+
+        content {
+          noncurrent_days = lookup(noncurrent_version_transition.value, "days", null)
+          storage_class   = noncurrent_version_transition.value.storage_class
+        }
+      }
+
+      dynamic "transition" {
+        for_each = lookup(rule.value, "transition", {})
+
+        content {
+          date          = lookup(transition.value, "date", null)
+          days          = lookup(transition.value, "days", null)
+          storage_class = transition.value.storage_class
+        }
+      }
     }
   }
 }
