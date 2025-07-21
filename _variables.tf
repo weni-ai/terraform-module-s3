@@ -123,6 +123,19 @@ variable "cors_rules" {
   nullable = false
 }
 
+variable "enable_acl" {
+  type        = bool
+  default     = false
+  description = "Define se o recurso ACL será criado"
+}
+
+variable "bucket_acl" {
+  type        = string
+  default     = null
+  description = "ACL usada no bucket (ex: public-read, private)"
+}
+
+
 variable "tags" {
   type    = map(string)
   default = {}

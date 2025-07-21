@@ -81,3 +81,10 @@ resource "aws_s3_bucket_cors_configuration" "bucket_cors" {
     }
   }
 }
+
+resource "aws_s3_bucket_acl" "bucket_acl" {
+  count  = var.enable_acl ? 1 : 0
+  bucket = aws_s3_bucket.bucket[0].id
+  acl    = var.bucket_acl
+}
+
