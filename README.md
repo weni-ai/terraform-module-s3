@@ -89,6 +89,7 @@ No requirements.
 | [aws_iam_user_policy_attachment.bucket_user_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_iam_user_policy_attachment.extra_custom_policy](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment) | resource |
 | [aws_s3_bucket.bucket](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket) | resource |
+| [aws_s3_bucket_acl.bucket_acl](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_acl) | resource |
 | [aws_s3_bucket_acl.grant_owner_to_iam](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_acl) | resource |
 | [aws_s3_bucket_cors_configuration.bucket_cors](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_cors_configuration) | resource |
 | [aws_s3_bucket_intelligent_tiering_configuration.bucket_tiering](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_intelligent_tiering_configuration) | resource |
@@ -105,6 +106,7 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_bucket_acl"></a> [bucket\_acl](#input\_bucket\_acl) | ACL usada no bucket (ex: public-read, private) | `string` | `null` | no |
 | <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | n/a | `string` | n/a | yes |
 | <a name="input_bucket_type"></a> [bucket\_type](#input\_bucket\_type) | n/a | `string` | `"private"` | no |
 | <a name="input_cors_rules"></a> [cors\_rules](#input\_cors\_rules) | n/a | `list` | <pre>[<br>  {<br>    "allowed_headers": [<br>      "*"<br>    ],<br>    "allowed_methods": [<br>      "PUT",<br>      "HEAD",<br>      "POST",<br>      "GET"<br>    ],<br>    "allowed_origins": [<br>      "*.weni.ai"<br>    ],<br>    "expose_headers": [<br>      "ETag",<br>      "Access-Control-Allow-Origin"<br>    ],<br>    "max_age_seconds": 3000<br>  }<br>]</pre> | no |
@@ -112,6 +114,7 @@ No requirements.
 | <a name="input_create_iam_eks_role"></a> [create\_iam\_eks\_role](#input\_create\_iam\_eks\_role) | n/a | `any` | `{}` | no |
 | <a name="input_create_iam_user"></a> [create\_iam\_user](#input\_create\_iam\_user) | n/a | `bool` | `false` | no |
 | <a name="input_create_iam_user_write_acl"></a> [create\_iam\_user\_write\_acl](#input\_create\_iam\_user\_write\_acl) | If iam user can use WRITE\_ACP on bucket | `bool` | `false` | no |
+| <a name="input_enable_acl"></a> [enable\_acl](#input\_enable\_acl) | Define se o recurso ACL será criado | `bool` | `false` | no |
 | <a name="input_expiration_objects_days"></a> [expiration\_objects\_days](#input\_expiration\_objects\_days) | n/a | `number` | `90` | no |
 | <a name="input_expiration_objects_enabled"></a> [expiration\_objects\_enabled](#input\_expiration\_objects\_enabled) | n/a | `bool` | `false` | no |
 | <a name="input_extra_custom_policy"></a> [extra\_custom\_policy](#input\_extra\_custom\_policy) | n/a | `any` | `{}` | no |
