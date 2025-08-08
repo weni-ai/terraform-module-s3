@@ -17,9 +17,9 @@ resource "aws_iam_role_policy_attachment" "attach-policy-to-role" {
   #for_each = {
   #  for k, v in local.attach_policy_to_role : "${v.policy_key}${v.role_key}" => v
   #}
-  for_each = toset(flatten(
+  for_each = var.create && length(module.iam_eks_role)>0 ? toset(flatten(
     try(var.extra_policy[*], [])
-  ))
+  )) : toset(flatten([]))
 
   #role = aws_iam_role.role[each.value.role_key].name
   role = var.bucket_name
