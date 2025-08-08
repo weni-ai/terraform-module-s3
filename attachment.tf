@@ -28,7 +28,7 @@ resource "aws_iam_role_policy_attachment" "attach-policy-to-role" {
 }
 
 resource "aws_iam_user_policy_attachment" "attach-policy-to-user" {
-  for_each = var.create ? toset(flatten(
+  for_each = var.create == true ? toset(flatten(
     try(var.extra_policy[*], [])
   )) : {}
 
