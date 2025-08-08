@@ -25,6 +25,9 @@ resource "aws_iam_role_policy_attachment" "attach-policy-to-role" {
   role = var.bucket_name
 
   policy_arn = data.aws_iam_policy.policy[each.value].arn
+  depends_on = [
+    module.iam_eks_role
+  ]
 }
 
 resource "aws_iam_user_policy_attachment" "attach-policy-to-user" {
