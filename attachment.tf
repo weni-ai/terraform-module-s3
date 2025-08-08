@@ -28,15 +28,16 @@ resource "aws_iam_role_policy_attachment" "attach-policy-to-role" {
 }
 
 resource "aws_iam_user_policy_attachment" "attach-policy-to-user" {
-  for_each = var.create == true ? toset(flatten(
+  for_each = var.create && var.create_iam_user ? toset(flatten(
     try(var.extra_policy[*], [])
   )) : toset(flatten([]))
 
-  user       = each.value[0]
-  policy_arn = each.value[1]
+  user       = aws_iam_user.bucket_user[0].name
+  policy_arn = data.aws_iam_policy.policy[each.value].arn
 
   depends_on = [
     aws_iam_policy.extra_custom_policy,
-    aws_iam_policy.bucket_rw
+    aws_iam_policy.bucket_rw,
+    aws_iam_user.bucket_user,
   ]
 }
