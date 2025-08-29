@@ -69,13 +69,15 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
         true
       )==true ? "Enabled" : "Disabled"
 
+      prefix = lookup(rule.value, "prefix", "")
+
       dynamic "filter" {
         for_each = try(
-          rule.value.prefix, null) == null ? [] : toset(["0"]
-        )
+          rule.value.prefix, null
+        ) == null ? [] : toset(["0"])
 
         content {
-          prefix = lookup(rule.value, "prefix", "")
+          #prefix = lookup(rule.value, "prefix", "")
 
           and {
             tags = lookup(rule.value, "tags", null)
