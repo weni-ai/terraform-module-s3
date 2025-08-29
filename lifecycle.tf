@@ -63,7 +63,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
         )
 
         content {
-          prefix = lookup(rule.value, "prefix", null)
+          prefix = lookup(rule.value, "prefix", "")
 
           and {
             tags = lookup(rule.value, "tags", null)
