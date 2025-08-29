@@ -10,7 +10,7 @@ data "aws_iam_openid_connect_provider" "eks" {
     for eks_id, eks_role in var.create_iam_eks_role: eks_id => eks_role if strcontains(eks_id, "/")==false
   }
 
-  url = data.aws_eks_cluster.this.identity[0].oidc[0].issuer
+  url = data.aws_eks_cluster.eks[each.key].identity[0].oidc[0].issuer
 }
 
 module "iam_eks_role" {
