@@ -2,7 +2,7 @@ data "aws_eks_cluster" "eks" {
   for_each = {
     for eks_id, eks_role in var.create_iam_eks_role: eks_id => eks_role if strcontains(eks_id, "/")==false
   }
-  name = "example"
+  name = each.key
 }
 
 module "iam_eks_role" {
