@@ -28,6 +28,7 @@ module "iam_eks_role" {
     }
   }
 
+  use_name_prefix = false
   #cluster_service_accounts = var.create_iam_eks_role
   #role_policy_arns = merge(
   #  {
