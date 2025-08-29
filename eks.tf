@@ -5,6 +5,14 @@ data "aws_eks_cluster" "eks" {
   name = each.key
 }
 
+data "aws_iam_openid_connect_provider" "eks" {
+  for_each = {
+    for eks_id, eks_role in var.create_iam_eks_role: eks_id => eks_role if strcontains(eks_id, "/")==false
+  }
+
+  url = data.aws_eks_cluster.this.identity[0].oidc[0].issuer
+}
+
 module "iam_eks_role" {
   count = var.create && length(var.create_iam_eks_role) > 0 ? 1 : 0
 
@@ -15,7 +23,7 @@ module "iam_eks_role" {
   oidc_providers = {
     for eks_id, eks_role in var.create_iam_eks_role: eks_id => {
       #provider_arn = try(data.aws_eks_cluster.eks[eks_id].identity.oidc[0], eks_id)
-      provider_arn = data.aws_eks_cluster.eks[eks_id].identity[0].oidc[0].issuer
+      provider_arn =  data.aws_iam_openid_connect_provider.eks[eks_id].arn
       namespace_service_accounts = eks_role
     }
   }
