@@ -71,19 +71,19 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
 
       prefix = lookup(rule.value, "prefix", "")
 
-      dynamic "filter" {
-        for_each = try(
-          rule.value.prefix, null
-        ) == null ? [] : toset(["0"])
+      #dynamic "filter" {
+      #  for_each = try(
+      #    rule.value.prefix, null
+      #  ) == null ? [] : toset(["0"])
 
-        content {
-          #prefix = lookup(rule.value, "prefix", "")
+      #  content {
+      #    #prefix = lookup(rule.value, "prefix", "")
 
-          and {
-            tags = lookup(rule.value, "tags", null)
-          }
-        }
-      }
+      #    and {
+      #      tags = lookup(rule.value, "tags", null)
+      #    }
+      #  }
+      #}
 
       expiration {
         date                         = try(
