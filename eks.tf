@@ -22,8 +22,10 @@ module "iam_eks_role" {
 
   oidc_providers = {
     for eks_id, eks_role in var.create_iam_eks_role: eks_id => {
-      #provider_arn = try(data.aws_eks_cluster.eks[eks_id].identity.oidc[0], eks_id)
-      provider_arn =  data.aws_iam_openid_connect_provider.eks[eks_id].arn
+      provider_arn =  try(
+        data.aws_iam_openid_connect_provider.eks[eks_id].arn,
+        eks_id
+      )
       namespace_service_accounts = eks_role
     }
   }
