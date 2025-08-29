@@ -11,6 +11,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
       days          = var.infrequent_access_days
     }
 
+    prefix = ""
     status = var.infrequent_access_enabled ? "Enabled" : "Disabled"
   }
 
@@ -22,6 +23,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
       days          = var.glacier_days
     }
 
+    prefix = ""
     status = var.glacier_enabled ? "Enabled" : "Disabled"
   }
 
@@ -33,6 +35,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
       days          = var.intelligent_tiering_days
     }
 
+    prefix = ""
     status = var.intelligent_tiering_enabled ? "Enabled" : "Disabled"
   }
 
@@ -43,6 +46,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "bucket_lifecycle" {
       days = var.expiration_objects_days
     }
 
+    prefix = ""
     status = var.expiration_objects_enabled ? "Enabled" : "Disabled"
   }
 
